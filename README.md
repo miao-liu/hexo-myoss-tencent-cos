@@ -1,4 +1,4 @@
-# myoss-hexo-tencent-cos
+# hexo-myoss-tencent-cos
 
 Tencent Cloud Object Storage (COS) sync plugin for Hexo (使用 "腾讯云象存储服务" 同步静态资源文件)
 
@@ -6,11 +6,11 @@ Tencent Cloud Object Storage (COS) sync plugin for Hexo (使用 "腾讯云象存
 
 COS is one of the best static blog hosting platforms, you can enable CDN and configure Https.
 
-`myoss-hexo-tencent-cos` allows you to publish your Hexo blog resource directly using commands `hexo tencent-cos sync`.
+allows you to publish your Hexo blog resource directly using commands `hexo tencent-cos sync`.
 
 ## Installation
 
->$ npm install myoss-hexo-tencent-cos --save
+>$ npm install hexo-myoss-tencent-cos --save
 
 ## Configure
 
@@ -57,6 +57,6 @@ Released under the [Apache 2 License](http://www.apache.org/licenses/LICENSE-2.0
 
 ## Related Projects
 
-- cos-nodejs-sdk-v5(https://github.com/tencentyun/cos-nodejs-sdk-v5)
-- hexo-deployer-cos(https://github.com/sdlzhd/hexo-deployer-cos)
-- hexo-qiniu-sync(https://github.com/gyk001/hexo-qiniu-sync)
+- cos-nodejs-sdk-v5 (https://github.com/tencentyun/cos-nodejs-sdk-v5)
+- hexo-deployer-cos (https://github.com/sdlzhd/hexo-deployer-cos)
+- hexo-qiniu-sync (https://github.com/gyk001/hexo-qiniu-sync)

@@ -1,16 +1,20 @@
 {
-  "name": "myoss-hexo-tencent-cos",
+  "name": "hexo-myoss-tencent-cos",
   "version": "1.0.0",
   "description": "Tencent Cloud Object Storage (COS) sync plugin for Hexo (使用 \"腾讯云象存储服务\" 同步静态资源文件)",
-  "author": "jerry.myoss@gmail.com",
-  "license": "Apache 2",
-  "bugs": {
-    "url": "https://github.com/myoss/myoss-hexo-tencent-cos/issues"
+  "author": {
+    "name": "Jerry.Chen",
+    "email": "jerry.myoss@gmail.com",
+    "url": "https://github.com/myoss"
   },
-  "homepage": "https://github.com/myoss/myoss-hexo-tencent-cos#readme",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/myoss/hexo-myoss-tencent-cos/issues"
+  },
+  "homepage": "https://github.com/myoss/hexo-myoss-tencent-cos#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/myoss-cloud/myoss-hexo-tencent-cos.git"
+    "url": "git+https://github.com/myoss/hexo-myoss-tencent-cos.git"
   },
   "keywords": [
     "hexo",
@@ -21,7 +25,9 @@
     "sync"
   ],
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
     "chalk": "^2.4.1",
     "cos-nodejs-sdk-v5": "^2.4.8",
