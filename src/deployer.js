@@ -14,7 +14,7 @@ const log = hexo.log;
  * @param {Object} args 配置信息
  * @param {Object} runArgs 运行参数
  */
-function sync(args, runArgs) {
+function sync(args, runArgs) {    
     // check the config
     if (!args.secretId ||
         !args.secretKey ||
@@ -39,9 +39,8 @@ function sync(args, runArgs) {
         return;
     }
 
-    const publicDir = args.resourceDirectory.localDirectory;
-    const localFileMap = new Map();
-
+    const publicDir =args.resourceDirectory.localDirectory;
+    const localFileMap = new Map();    
     // 获取本地文件
     const bucketKeyPrefix = args.bucketPrefix ? args.bucketPrefix + '/' : '';
     getFiles(publicDir, (file) => {
@@ -49,7 +48,7 @@ function sync(args, runArgs) {
         localFileMap.set(
             key,
             file
-        );
+        );        
     });
 
     // 创建COS对象
@@ -67,7 +66,7 @@ function sync(args, runArgs) {
         if (err) {
             log.info(err);
         } else {
-            let sum = cosFileMap.size;
+            let sum = cosFileMap.size;            
             if (sum === 0) {
                 // 上传所有文件
                 localFileMap.forEach((filepath, file) => {
@@ -89,38 +88,7 @@ function sync(args, runArgs) {
                 let count = 0;
                 let extraFiles = [];
                 const iteratorEmitter = new EventEmitter();
-
-                cosFileMap.forEach((eTag, key) => {
-                    if (!localFileMap.has(key)) {
-                        // 放入待删除的文件列表,计数器+1
-                        extraFiles.push(key);
-                        ++count;
-                        if (count === sum) {
-                            iteratorEmitter.emit('finshed');
-                        }
-                    } else {
-                        // 获取此文件的md5
-                        util.getFileMd5(
-                            fs.createReadStream(localFileMap.get(key)),
-                            (err, md5) => {
-                                if (md5 === eTag.substring(1, 33)) {
-                                    // 从本地文件列表移除,计数器+1
-                                    localFileMap.delete(key);
-                                    ++count;
-                                    if (count === sum) {
-                                        iteratorEmitter.emit('finshed');
-                                    }
-                                } else {
-                                    // 计数器+1
-                                    ++count;
-                                    if (count === sum) {
-                                        iteratorEmitter.emit('finshed');
-                                    }
-                                }
-                            });
-                    }
-                });
-
+                  
                 iteratorEmitter.on('finshed', () => {
                     // 开始上传本地文件,并且删除多余的文件
                     localFileMap.forEach((filepath, file) => {
@@ -153,6 +121,38 @@ function sync(args, runArgs) {
                         });
                     });
                 });
+                
+                cosFileMap.forEach((eTag, key) => {                                    
+                    if (!localFileMap.has(key)) {
+                        // 放入待删除的文件列表,计数器+1
+                        extraFiles.push(key);
+                        ++count;                        
+                        if (count === sum) {                            
+                            iteratorEmitter.emit('finshed',);
+                        }
+                    } else {
+                        // 获取此文件的md5
+                        util.getFileMd5(
+                            fs.createReadStream(localFileMap.get(key)),
+                            (err, md5) => {                                                               
+                                if (md5 === eTag.substring(1, 33)) {
+                                    // 从本地文件列表移除,计数器+1
+                                    localFileMap.delete(key);
+                                    ++count;
+                                    if (count === sum) {
+                                        iteratorEmitter.emit('finshed');
+                                    }
+                                } else {
+                                    // 计数器+1
+                                    ++count;
+                                    if (count === sum) {
+                                        iteratorEmitter.emit('finshed');
+                                    }
+                                }
+                            });
+                    }
+                });
+                
             }
         }
     });
@@ -163,11 +163,11 @@ function sync(args, runArgs) {
  * @param {string} dir
  * @param {function}  callback
  */
-function getFiles(dir, callback) {
-    let files = fs.listDirSync(dir);
+function getFiles(dir, callback) {    
+    let files = fs.listDirSync(dir);    
     files.forEach((filePath) => {
         let absPath = path.join(dir, filePath);
-        let stat = fs.statSync(absPath);
+        let stat = fs.statSync(absPath);        
         if (stat.isDirectory()) {
             uploadFiles(absPath, callback);
         } else {
@@ -185,7 +185,7 @@ function getFiles(dir, callback) {
 function getUploadPath(absPath, root) {
     let pathArr = absPath.split(path.sep);
     let rootIndex = pathArr.indexOf(root);
-    pathArr = pathArr.slice(rootIndex + 1);
+    pathArr = pathArr.slice(rootIndex + 1);    
     return pathArr.join('/');
 }
 
@@ -205,8 +205,7 @@ function getCosFiles(cos, config, callback) {
         if (err) {
             console.log(err);
             return;
-        }
-
+        }      
         data.Contents.forEach((item) => {
             cosFileMap.set(
                 item.Key,
